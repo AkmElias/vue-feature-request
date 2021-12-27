@@ -1,0 +1,11 @@
+{
+    "name": "elias/wpvfr",
+    "description": "Handle basic vue feature request",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Elias\\Wpvfr\\": "includes/"
+        }
+    },
+    "require": {}
+}
