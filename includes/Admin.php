@@ -25,9 +25,9 @@ class Admin {
         $slug = "vue-feature-request";
 
 
-        add_menu_page( __('Vue Feature Request', 'vue-feature-request'), __('Vue Feature Request', 'vue-feature-request'), $capability, $slug, [$this, 'wpvfr_load_view'], 'dashicons-text', 65);
+        add_menu_page( __('Vue Feature Request Board', 'vue-feature-request'), __('Vue Feature Request Board', 'vue-feature-request'), $capability, $slug, [$this, 'wpvfr_load_view'], 'dashicons-text', 65);
 
-        add_submenu_page( $slug, __('Vue Feature Request Lists', 'vue-feature-request'), __('Vue Feature Request Lists', 'vue-feature-request'), $capability, $slug.'#/list', [$this, 'wpvfr_load_view'] );
+        add_submenu_page( $slug, __('Vue Feature Request Lists', 'vue-feature-request'), __('Vue Feature Request Lists', 'vue-feature-request'), $capability, $slug.'#/feature-request-list', [$this, 'wpvfr_load_view'] );
     }
 
     public function wpvfr_load_view(){

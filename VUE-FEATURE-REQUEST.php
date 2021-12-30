@@ -110,8 +110,8 @@ class WP_Vue_Feature_Request{
             new \Elias\Wpvfr\Admin();
         }
 
-        new \Elias\Wpvfr\Assets();
-
+        new Elias\Wpvfr\Assets();
+        new Elias\Wpvfr\Router\Router();
     }
 }
 

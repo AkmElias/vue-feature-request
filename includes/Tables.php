@@ -12,7 +12,7 @@ class Tables{
         $charset_collate = $wpdb->get_charset_collate();
         $wpvfr_users_table = $wpdb->prefix . "users";
 
-        //vue request board table
+        //vue feature request board table
         $wpvfr_request_board_table = $wpdb->prefix. WPVFR_request_board;
         $sql_request_board = "CREATE TABLE IF NOT EXISTS $wpvfr_request_board_table(
           id INT NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ class Tables{
           PRIMARY KEY (id)
         ) $charset_collate;";
 
-        //vue request list table
+        //vue feature request list table
         $wpvfr_request_list_table = $wpdb->prefix. WPVFR_request_list;
         $sql_request_list = "CREATE TABLE IF NOT EXISTS $wpvfr_request_list_table(
             id INT NOT NULL AUTO_INCREMENT,
@@ -40,7 +40,7 @@ class Tables{
             PRIMARY KEY (id)
         ) $charset_collate;";
 
-        //vue request comments table
+        //vue feature request comments table
         $wpvfr_request_comment_table = $wpdb->prefix. WPVFR_request_comments;
         $sql_request_comments = "CREATE TABLE IF NOT EXISTS $wpvfr_request_comment_table(
             id INT NOT NULL AUTO_INCREMENT,
@@ -52,7 +52,7 @@ class Tables{
             PRIMARY KEY (id)
         ) $charset_collate;";
 
-        //vue request votes tables
+        //vue feature request votes tables
         $wpvfr_request_votes_table = $wpdb->prefix. WPVFR_rquest_votes;
         $sql_request_votes = "CREATE TABLE IF NOT EXISTS $wpvfr_request_votes_table(
             id INT NOT NULL AUTO_INCREMENT,
@@ -63,7 +63,7 @@ class Tables{
             PRIMARY KEY (id)
         )";
 
-        //vue request comment reply table
+        //vue feature request comment reply table
         $wpvfr_request_comment_reply_table  = $wpdb->prefix. WPVFR_request_comment_reply;
         $sql_request_comment_reply = "CREATE TABLE IF NOT EXISTS $wpvfr_request_comment_reply_table(
             id INT NOT NULL AUTO_INCREMENT,
