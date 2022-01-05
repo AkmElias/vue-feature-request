@@ -10,7 +10,7 @@ class VotesModel{
     public function __construct(){
         global $wpdb;
         $this->_wpdb = $wpdb;
-        $this->table = $wpdb->prefix. WPVFR_rquest_votes;
+        $this->table = $wpdb->prefix. WPVFR_request_votes;
     }
 
     /**

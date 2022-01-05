@@ -57,7 +57,7 @@ class WP_Vue_Feature_Request{
         define('WPVFR_request_board', 'wpvfr_request_boards');
         define("WPVFR_request_list", 'wpvfr_request_lists');
         define('WPVFR_request_comments', 'wpvfr_request_comments');
-        define('WPVFR_rquest_votes', 'wpvfr_request_votes');
+        define('WPVFR_request_votes', 'wpvfr_request_votes');
         define('WPVFR_request_comment_reply', 'wpvfr_request_comment_replies');
     }
 
@@ -109,8 +109,9 @@ class WP_Vue_Feature_Request{
 
             new \Elias\Wpvfr\Admin();
         }
-
+         
         new Elias\Wpvfr\Assets();
+        new Elias\Wpvfr\Shortcode();
         new Elias\Wpvfr\Router\Router();
     }
 }

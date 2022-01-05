@@ -9,6 +9,6 @@ class Router
         if(is_admin()){
             new Admin();
         }
-        // new Frontend();
+        new Frontend();
     }
 }

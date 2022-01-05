@@ -12,16 +12,16 @@ class VueFeatureList{
     }
 
      // feature add 
-     public function wpvfr_add_feature(){
+     public function wpvfr_add_vue_feature_req(){
         //check nonce, if it fails return
-        if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-           wp_send_json([
-               'success' => false,
-               'status' => 403,
-               'message' => 'Something wrong! Not a valid request.'
-           ]);
-           wp_die();
-        }
+        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
+        //    wp_send_json([
+        //        'success' => false,
+        //        'status' => 403,
+        //        'message' => 'Something wrong! Not a valid request.'
+        //    ]);
+        //    wp_die();
+        // }
 
        //error data
        $error = false;
@@ -80,7 +80,7 @@ class VueFeatureList{
            wp_die();
        }
 
-       // handle add databese
+       // handle add to database
        $result = $this->model->wpvfr_add_vue_feature_req($data);
         if($result){
             $data = $this->model->wpvfr_get_vue_feature_req_by_id($result);
@@ -95,14 +95,14 @@ class VueFeatureList{
     // get all feature list
     public function wpvfr_get_all_vue_feature_list(){
         //check nonce, if it fails return
-        if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-            wp_send_json([
-                'success' => false,
-                'status' => 403,
-                'message' => 'Something wrong! Not a valid request.'
-            ]);
-            wp_die();
-        }
+        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
+        //     wp_send_json([
+        //         'success' => false,
+        //         'status' => 403,
+        //         'message' => 'Something wrong! Not a valid request.'
+        //     ]);
+        //     wp_die();
+        // }
 
         $result = $this->model->wpvfr_get_all_vue_feature_reqs();
         if(is_wp_error($result)){
@@ -118,16 +118,16 @@ class VueFeatureList{
     }
 
     //Get all request by board id 
-    public function wpvfr_get_all_reqs_by_board_id(){
+    public function wpvfr_get_all_vue_feature_reqs_by_board_id(){
          //check nonce, if it fails return
-        if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-           wp_send_json([
-               'success' => false,
-               'status' => 403,
-               'message' => 'Something wrong! Not a valid request.'
-           ]);
-           wp_die();
-        }
+        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
+        //    wp_send_json([
+        //        'success' => false,
+        //        'status' => 403,
+        //        'message' => 'Something wrong! Not a valid request.'
+        //    ]);
+        //    wp_die();
+        // }
 
         $board_id = isset($_POST['board_id']) ? $_POST['board_id'] : '';
 
@@ -143,7 +143,7 @@ class VueFeatureList{
                 wp_die();
             }
         } else {
-            $result = $this->model->wpvfr_get_vue_feature_reqs_by_board_id($board_id);
+            $result = $this->model->wpvfr_get_all_vue_feature_reqs_by_board_id($board_id);
             if(is_wp_error( $result ) || $result === NULL) {
                 wp_send_json([
                     'success' => false,

@@ -41,7 +41,7 @@ class VueFeatureListModel {
      * @params board_id 
      * @return feature reqs
      */
-    public function wpvfr_get_vue_feature_reqs_by_board_id($id){
+    public function wpvfr_get_all_vue_feature_reqs_by_board_id($id){
         return $this->_wpdb->get_results("SELECT * from $this->table WHERE board_id = $id", ARRAY_A);
     }
 
