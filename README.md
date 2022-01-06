@@ -11,5 +11,7 @@ laravel-mix for vue integration with php.
 
 # install and run
 
-Go to the root plugin folder and run # yarn
+Go to the root plugin folder and run
+yarn 
+yarn dev
 
