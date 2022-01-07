@@ -53,7 +53,7 @@ class Tables{
         ) $charset_collate;";
 
         //vue feature request votes tables
-        $wpvfr_request_votes_table = $wpdb->prefix. WPVFR_rquest_votes;
+        $wpvfr_request_votes_table = $wpdb->prefix. WPVFR_request_votes;
         $sql_request_votes = "CREATE TABLE IF NOT EXISTS $wpvfr_request_votes_table(
             id INT NOT NULL AUTO_INCREMENT,
             user BIGINT(20) unsigned,
