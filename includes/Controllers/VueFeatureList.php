@@ -14,14 +14,14 @@ class VueFeatureList{
      // feature add 
      public function wpvfr_add_vue_feature_req(){
         //check nonce, if it fails return
-        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-        //    wp_send_json([
-        //        'success' => false,
-        //        'status' => 403,
-        //        'message' => 'Something wrong! Not a valid request.'
-        //    ]);
-        //    wp_die();
-        // }
+        if (!wp_verify_nonce($_POST['nonce'], 'aj-nonce')) {
+           wp_send_json([
+               'success' => false,
+               'status' => 403,
+               'message' => 'Something wrong! Not a valid request.'
+           ]);
+           wp_die();
+        }
 
        //error data
        $error = false;
@@ -95,14 +95,14 @@ class VueFeatureList{
     // get all feature list
     public function wpvfr_get_all_vue_feature_list(){
         //check nonce, if it fails return
-        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-        //     wp_send_json([
-        //         'success' => false,
-        //         'status' => 403,
-        //         'message' => 'Something wrong! Not a valid request.'
-        //     ]);
-        //     wp_die();
-        // }
+        if (!wp_verify_nonce($_POST['nonce'], 'aj-nonce')) {
+            wp_send_json([
+                'success' => false,
+                'status' => 403,
+                'message' => 'Something wrong! Not a valid request.'
+            ]);
+            wp_die();
+        }
 
         $result = $this->model->wpvfr_get_all_vue_feature_reqs();
         if(is_wp_error($result)){
@@ -120,14 +120,14 @@ class VueFeatureList{
     //Get all request by board id 
     public function wpvfr_get_all_vue_feature_reqs_by_board_id(){
          //check nonce, if it fails return
-        // if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
-        //    wp_send_json([
-        //        'success' => false,
-        //        'status' => 403,
-        //        'message' => 'Something wrong! Not a valid request.'
-        //    ]);
-        //    wp_die();
-        // }
+        if (!wp_verify_nonce($_POST['nonce'], 'aj-nonce')) {
+           wp_send_json([
+               'success' => false,
+               'status' => 403,
+               'message' => 'Something wrong! Not a valid request.'
+           ]);
+           wp_die();
+        }
 
         $board_id = isset($_POST['board_id']) ? $_POST['board_id'] : '';
 
