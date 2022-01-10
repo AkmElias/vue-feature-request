@@ -13,5 +13,8 @@ laravel-mix for vue integration with php.
 
 Go to the root plugin folder and run
 yarn 
+
 yarn dev
+
+yarn watch
 
