@@ -4,16 +4,18 @@ namespace Elias\Wpvfr;
 
 use Elias\Wpvfr\Views\Frontend\Frontend;
 
-class Shortcode{
+class Shortcode
+{
 
     protected $frontend;
 
-    public function __construct(){
-        add_shortcode( "wpvfr-board", [$this, 'wpvfr_feature_request_board'] );
+    public function __construct()
+    {
+        add_shortcode("wpvfr-board", [$this, 'wpvfr_feature_request_board']);
         $this->frontend = new Frontend();
     }
 
-    public function wpvfr_feature_request_board($atts = [], $e = '', $tag = '' ): string 
+    public function wpvfr_feature_request_board($atts = [], $e = '', $tag = ''): string
     {
         global $wpdb;
         $list_table = $wpdb->prefix . WPVFR_request_list;
@@ -24,22 +26,23 @@ class Shortcode{
         $wpvfr_atts = shortcode_atts(
             array(
                 'id' => ''
-            ), $atts
+            ),
+            $atts
         );
 
-        if(!empty($wpvfr_atts['id'])) {
+        if (!empty($wpvfr_atts['id'])) {
             //Get board
-            $board = $wpdb->get_row("SELECT * FROM ". $wpdb->prefix . WPVFR_request_board . " WHERE id=" . $wpvfr_atts['id']);
+            $board = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . WPVFR_request_board . " WHERE id=" . $wpvfr_atts['id']);
             global $current_user;
             global $wp;
 
-             // sort request by 
+            // sort request by 
             $order_by = '';
             if ($board->sort_by == 'alphabetical') {
                 $order_by = "title";
             } else if ($board->sort_by == 'comments') {
                 $order_by = "comments DESC";
-            } else if ($board->sort_by == 'votes') {
+            } else if ($board->sort_by == 'upvotes') {
                 $order_by = "votes DESC";
             } else if ($board->sort_by == 'random') {
                 $order_by = "RAND()";
@@ -47,22 +50,29 @@ class Shortcode{
                 $order_by = "";
             }
 
-            $all_req = $wpdb->get_results(
-                "SELECT l.*, COALESCE(comments,0) as comments, COALESCE(votes, 0) as votes FROM wp_wpvfr_request_lists as l
+            // var_dump($board, ' ', $order_by); 
+
+            $query = "SELECT l.*, COALESCE(comments,0) as comments, COALESCE(votes, 0) as votes FROM wp_wpvfr_request_lists as l
 LEFT JOIN 
 	(SELECT * , COUNT(request_id) as comments FROM wp_wpvfr_request_comments GROUP BY request_id) as c
-ON l.id = c.request_id
-LEFT JOIN 
-	(SELECT * , COUNT(user) as votes FROM wp_wpvfr_request_votes GROUP BY request_id) as v
-ON l.id = v.request_id
-WHERE l.board_id = ".$wpvfr_atts['id']."
-ORDER BY $order_by"
+ON l.id = c.request_id 
+LEFT JOIN
+    (SELECT * , COUNT(user) as votes FROM wp_wpvfr_request_votes GROUP BY request_id) as v
+    ON l.id = v.request_id
+    WHERE l.board_id = ".$wpvfr_atts['id']." ORDER BY $order_by";
+
+
+            // exit();
+            $all_req = $wpdb->get_results(
+                $query
             );
 
-          //UI starts 
-          $e = '<div class="wpvfr">' ;
+            // print_r($all_req);
+            // exit();
+            //UI starts 
+            $e = '<div class="wpvfr">';
 
-        // header section
+            // header section
             $e .= '<header class="flex justify-between items-center">';
             $e .= '<div class="header-left">';
             if (!empty($board->logo)) {
@@ -103,7 +113,7 @@ ORDER BY $order_by"
             $e .= "</div>";
             $e .= "</header>";
 
-             // request feature section
+            // request feature section
             $e .= '<section class="wpvfr-feature-section">';
             $e .= '<div class="frb-req-header">';
             $e .= '<button class="frb-req-add-button">' . esc_html__('New Vue Feature Request', 'wpvfr') . '</button>';
@@ -123,46 +133,50 @@ ORDER BY $order_by"
             $e .= '</div>';
             $e .= "</section>";
 
-            
+
             // feature request filter section
             $e .= '<div class="frb-req-filter-area">';
             $e .= '<p>(' . count($all_req) . ') ' . esc_html__('feature requests', 'wpvfr') . '</p> ';
             $e .= '<div class="right">';
-                $e .= '<p>' . esc_html__('Sort By:', 'wpvfr') . '</p>';
-                $e .= '<select data-id="' . esc_attr($board->id) . '" id="wpvfr-req-select-id">';
-                if ($board->sort_by === 'votes') {
-                    $selected_vote = __('selected', 'wpvfr');
-                } else {
-                    $selected_vote = '';
-                }
-                if ($board->sort_by === 'alphabetical') {
-                    $selected_alph = __('selected', 'wpvfr');
-                } else {
-                    $selected_alph = '';
-                }
-                if ($board->sort_by === 'comments') {
-                    $selected_cmnt = __('selected', 'wpvfr');
-                } else {
-                    $selected_cmnt = '';
-                }
-                if ($board->sort_by === 'random') {
-                    $selected_rnmd = __('selected', 'wpvfr');
-                } else {
-                    $selected_rnmd = '';
-                }
-                    $e .= '<option ' . esc_attr($selected_alph) . ' value="alphabetical">' . esc_html__('Alphabetical', 'wpvfr') . '</option>';
-                    $e .= '<option ' . esc_attr($selected_rnmd) . ' value="random">' . esc_html__('Random', 'wpvfr') . '</option>';
-                    $e .= '<option ' . esc_attr($selected_vote) . ' value="votes">' . esc_html__('Number of Upvotes', 'wpvfr') . '</option>';
-                    $e .= '<option ' . esc_attr($selected_cmnt) . ' value="comments">' . esc_html__('Number of Comments', 'wpvfr') . '</option>';
-                $e .= '</select>';
+            $e .= '<p>' . esc_html__('Sort By:', 'wpvfr') . '</p>';
+            $e .= '<select data-id="' . esc_attr($board->id) . '" id="wpvfr-req-select-id">';
+            if ($board->sort_by === 'votes') {
+                $selected_vote = __('selected', 'wpvfr');
+            } else {
+                $selected_vote = '';
+            }
+            if ($board->sort_by === 'alphabetical') {
+                $selected_alph = __('selected', 'wpvfr');
+            } else {
+                $selected_alph = '';
+            }
+            if ($board->sort_by === 'comments') {
+                $selected_cmnt = __('selected', 'wpvfr');
+            } else {
+                $selected_cmnt = '';
+            }
+            if ($board->sort_by === 'random') {
+                $selected_rnmd = __('selected', 'wpvfr');
+            } else {
+                $selected_rnmd = '';
+            }
+            $e .= '<option ' . esc_attr($selected_alph) . ' value="alphabetical">' . esc_html__('Alphabetical', 'wpvfr') . '</option>';
+            $e .= '<option ' . esc_attr($selected_rnmd) . ' value="random">' . esc_html__('Random', 'wpvfr') . '</option>';
+            $e .= '<option ' . esc_attr($selected_vote) . ' value="votes">' . esc_html__('Number of Upvotes', 'wpvfr') . '</option>';
+            $e .= '<option ' . esc_attr($selected_cmnt) . ' value="comments">' . esc_html__('Number of Comments', 'wpvfr') . '</option>';
+            $e .= '</select>';
             $e .= '</div>';
             $e .= '</div>';
 
-             // feature request items
+            // feature request items
 
             $e .= '<div class="wpvfr-requests-list-body">';
-            foreach ($all_req as $item) {
-                $e .= $this->frontend->wpvfr_item_view($board, $item);
+            if (sizeof($all_req) <= 0) {
+                $e .= '<p> Feature Requests (' . sizeof($all_req) . ') </p>';
+            } else {
+                foreach ($all_req as $item) {
+                    $e .= $this->frontend->wpvfr_item_view($board, $item);
+                }
             }
             $e .= '</div>';
 

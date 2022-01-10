@@ -7,7 +7,7 @@ class User{
     public function wpvfr_user_register()
     {
         //check nonce, if it fails return
-        if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
+        if (!wp_verify_nonce($_POST['nonce'], 'aj-nonce')) {
             wp_send_json([
                 'success' => false,
                 'status' => 403,
@@ -90,7 +90,7 @@ class User{
 
     public function wpvfr_user_login(){
         //check nonce, if it fails return
-        if (!wp_verify_nonce($_POST['nonce'], WPVFR_NONCE)) {
+        if (!wp_verify_nonce($_POST['nonce'], 'aj-nonce')) {
             wp_send_json([
                 'success' => false,
                 'status' => 403,

@@ -150,6 +150,54 @@ class VueFeatureBoard{
     }
 
     /**
+     * Update bord's sort_by only
+     */
+    public function wpvfr_update_board_sort_by(){
+         //check nonce, if it fails return
+        if(!wp_verify_nonce( $_POST['nonce'], 'aj-nonce' )){
+            wp_send_json([
+                "status" => 403,
+                "success"=> false,
+                "message" => "Something went wrong! Request not valid."
+            ]);
+            wp_die();
+        }
+
+        //check error 
+        $error = false;
+        $errors = array();
+
+        //get board data 
+        $data = array();
+        $where = array();
+        $where['id'] = sanitize_text_field($_POST['board_id']);
+
+        $data['sort_by'] = sanitize_text_field($_POST['sort_by']);
+
+        // board data validation
+        if (empty($where['id'])) {
+            //id is empty
+            $error = true;
+            $errors['board_id'] = 'Board not fountd.';
+        }
+
+        // check error and send response
+        if ($error) {
+            wp_send_json_error($errors, 403);
+            wp_die();
+        }
+
+        $result = $this->model->wpvfr_update_board_sort_by($data, $where);
+        if($result){
+            wp_send_json_success($result, 200);
+        }else{
+            wp_send_json(['success' => false]);
+        }
+        wp_die();
+
+    }
+
+    /**
      * Delete feature board by id
      */
     public function wpvfr_delete_feature_board(){

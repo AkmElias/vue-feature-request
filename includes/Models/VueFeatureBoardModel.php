@@ -48,11 +48,20 @@ class VueFeatureBoardModel {
     }
 
     /**
-     * Update board sort_by 
+     * Update board 
      * @params null
      * @return result
      */
     public function wpvfr_update_feaure_board($data, $where){
+        return $this->_wpdb->update($this->table, $data, $where);
+    }
+
+    /**
+     * Update bord sort_by
+     * @params $data, $WHERE
+     * @return result
+     */
+    public function wpvfr_update_board_sort_by($data, $where){
         return $this->_wpdb->update($this->table, $data, $where);
     }
 
