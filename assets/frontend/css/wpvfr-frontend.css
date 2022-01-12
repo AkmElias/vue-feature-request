@@ -131,6 +131,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 
 .wpvfr .tab.btn {
@@ -349,7 +350,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.wpvfr .frb-req-add-button {
+.wpvfr .wpvfr-req-add-button {
   background: #fdd8108f !important;
   border: 0 !important;
   border-radius: 5px;
@@ -360,7 +361,7 @@
   padding: 7px 12px;
   font-size: 18px;
 }
-.wpvfr .frb-req-add-button:hover {
+.wpvfr .wpvfr-req-add-button:hover {
   color: white !important;
   background: goldenrod !important;
 }
@@ -388,8 +389,8 @@
 }
 
 .logowrap .logo-preview {
-  width: 100px;
-  height: 100px;
+  width: fit-content;
+  height: fit-content;
   position: relative;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -399,10 +400,11 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+  padding: 5px;
 }
 .logowrap .logo-preview img {
-  width: 100%;
-  height: 100%;
+  max-width: 95%;
+  max-height: 95%;
   object-fit: cover;
   border-radius: 5px;
 }

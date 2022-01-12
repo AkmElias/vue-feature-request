@@ -168,10 +168,11 @@
   });
 
   // handle feature req form show hide
-  $(".frb-req-add-button").click(function () {
-    // $("#frb-req-form-area").animate({
-    //   height: "toggle",
-    // });
+  $(".wpvfr-req-add-button").click(function () {
+    $("#wpvfr-req-form-area").animate({
+      height: "toggle",
+    });
+    // $(".frb-req-form-area").toggle();
   });
 
   // handle feature req form logo
@@ -179,12 +180,12 @@
     if (window.File && window.FileList && window.FileReader) {
       let file = e.target.files[0];
       if (file) {
-        $(".wpvfr .logowrap .logo-preview-wraper .logo-preview").remove();
+        // $(".wpvfr .logowrap .logo-preview-wraper").remove();
         let reader = new FileReader();
         reader.onload = function (e) {
           $(".wpvfr .logowrap .logo-preview-wraper").append(
             '<div class="logo-preview">' +
-              '<img class="logo" src="' +
+              '<img class="logo" src="' + 
               e.target.result +
               '" title="' +
               e.target.name +
@@ -210,7 +211,7 @@
     let form_data = new FormData($(this)[0]);
     form_data.append("action", "wpvfr_add_vue_feature_req");
     form_data.append("nonce", ajax_obj.nonce);
-    console.log("submit calleddddddd", form_data);
+    // console.log("submit calleddddddd", form_data);
 
     $.ajax({
       type: "POST",

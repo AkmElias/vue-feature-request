@@ -50,7 +50,7 @@ class Shortcode
                 $order_by = "";
             }
 
-            // var_dump($board, ' ', $order_by); 
+            // var_dump($board, ' ', $order_by);
 
             $query = "SELECT l.*, COALESCE(comments,0) as comments, COALESCE(votes, 0) as votes FROM wp_wpvfr_request_lists as l
 LEFT JOIN 
@@ -59,15 +59,15 @@ ON l.id = c.request_id
 LEFT JOIN
     (SELECT * , COUNT(user) as votes FROM wp_wpvfr_request_votes GROUP BY request_id) as v
     ON l.id = v.request_id
-    WHERE l.board_id = ".$wpvfr_atts['id']." ORDER BY $order_by";
+    WHERE l.board_id = " . $wpvfr_atts['id'] . " ORDER BY $order_by";
 
-
+            // var_dump($query);
             // exit();
             $all_req = $wpdb->get_results(
                 $query
             );
 
-            // print_r($all_req);
+            // var_dump($all_req);
             // exit();
             //UI starts 
             $e = '<div class="wpvfr">';
@@ -116,12 +116,12 @@ LEFT JOIN
             // request feature section
             $e .= '<section class="wpvfr-feature-section">';
             $e .= '<div class="frb-req-header">';
-            $e .= '<button class="frb-req-add-button">' . esc_html__('New Vue Feature Request', 'wpvfr') . '</button>';
+            $e .= '<button class="wpvfr-req-add-button">' . esc_html__('New Vue Feature Request', 'wpvfr') . '</button>';
             $e .= '<input type="text"  name="frb_req_search_input" placeholder="' . esc_attr__('Search feature..', 'wpvfr') . '" class="frb-req-search-input">';
             $e .= '</div>';
 
             //form section
-            $e .= '<div id="frb-req-form-area" class="frb-req-form-area" style="display:none;">';
+            $e .= '<div id="wpvfr-req-form-area" class="wpvfr-req-form-area" style="display:none;">';
             if (!is_user_logged_in()) {
                 $e .= '<div class="frb-req-not-login-section">';
                 $e .= '<span>' . esc_html__('First Login to request feature.', 'wpvfr') . '</span>';
@@ -175,6 +175,7 @@ LEFT JOIN
                 $e .= '<p> Feature Requests (' . sizeof($all_req) . ') </p>';
             } else {
                 foreach ($all_req as $item) {
+                    // var_dump($item);
                     $e .= $this->frontend->wpvfr_item_view($board, $item);
                 }
             }
