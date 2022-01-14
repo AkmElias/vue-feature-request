@@ -12,7 +12,7 @@ class VueFeatureBoard{
         $this->model = new VueFeatureBoardModel();
     }
 
-    public function wpvfr_create_vue_feature_board(){
+    public function handle_endpoints(){
         //check nonce, if it fails return
         if(!wp_verify_nonce($_POST['nonce'], 'aj-nonce')){
             error_log("nonce failed........");
@@ -26,6 +26,31 @@ class VueFeatureBoard{
             wp_die();
         }
 
+        $route = sanitize_text_field($_REQUEST['route']);
+
+
+        $routes = array(
+            'add_feature_board'    => 'addFeatureBoard',
+            'get_all_feature_board' => 'getAllFeatureBoard',
+            'update_feature_board' => 'updateFeatureBoard',
+            'update_feature_board_sort_by' => 'updateFeatureBoardSortBy',
+            'delete_feature_board' => 'deleteFeatureBoard'
+            //            'update_global_currency_settings' => 'updateGlobalCurrencySettings',
+//            'wpf_upload_image'                => 'handleFileUpload',
+//            'get_recaptcha_settings'          => 'getRecaprchaSettings',
+//            'save_recaptcha_settings'         => 'saveRecaptchaSettings',
+//            'get_access_roles'                => 'getAccessRoles',
+//            'set_access_roles'                => 'setAccessRoles'
+        );
+
+        if (isset($routes[$route])) {
+
+            $this->{$routes[$route]}();
+            return;
+        }
+    }
+
+    public function addFeatureBoard(){
         //error data 
         $error = false;
         $errors = array();
@@ -76,17 +101,7 @@ class VueFeatureBoard{
         }
     }
 
-    public function wpvfr_get_all_vue_feature_board(){
-         //check nonce, if it fails return
-        if(!wp_verify_nonce( $_POST['nonce'], 'aj-nonce' )){
-        error_log("nonce  failed");
-            wp_send_json([
-                "status" => 403,
-                "success"=> false,
-                "message" => "Something went wrong! Request not valid."
-            ]);
-            wp_die();
-        }
+    public function getAllFeatureBoard(){
 
         $result = $this->model->wpvfr_get_all_boards();
         if(is_wp_error($result)){
@@ -102,16 +117,7 @@ class VueFeatureBoard{
 
     }
 
-    public function wpvfr_update_feaure_board(){
-         //check nonce, if it fails return
-        if(!wp_verify_nonce( $_POST['nonce'], 'aj-nonce' )){
-            wp_send_json([
-                "status" => 403,
-                "success"=> false,
-                "message" => "Something went wrong! Request not valid."
-            ]);
-            wp_die();
-        }
+    public function updateFeatureBoard(){
 
         //check error 
         $error = false;
@@ -152,16 +158,7 @@ class VueFeatureBoard{
     /**
      * Update bord's sort_by only
      */
-    public function wpvfr_update_board_sort_by(){
-         //check nonce, if it fails return
-        if(!wp_verify_nonce( $_POST['nonce'], 'aj-nonce' )){
-            wp_send_json([
-                "status" => 403,
-                "success"=> false,
-                "message" => "Something went wrong! Request not valid."
-            ]);
-            wp_die();
-        }
+    public function updateFeatureBoardSortBy(){
 
         //check error 
         $error = false;
@@ -200,16 +197,7 @@ class VueFeatureBoard{
     /**
      * Delete feature board by id
      */
-    public function wpvfr_delete_feature_board(){
-        //check nonce, if it fails return
-        if(!wp_verify_nonce( $_POST['nonce'], 'aj-nonce' )){
-            wp_send_json([
-                "status" => 403,
-                "success"=> false,
-                "message" => "Something went wrong! Request not valid."
-            ]);
-            wp_die();
-        }
+    public function deleteFeatureBoard(){
         
         //get id
         $where = array();

@@ -14,9 +14,6 @@ class Admin
     }
 
     public function wpvfr_admin_routes(){
-        add_action('wp_ajax_wpvfr_create_vue_feature_board',[$this->vueFeatureBoard,'wpvfr_create_vue_feature_board']);
-        add_action('wp_ajax_wpvfr_get_all_vue_feature_board',[$this->vueFeatureBoard,'wpvfr_get_all_vue_feature_board']);
-        add_action('wp_ajax_wpvfr_delete_feature_board', [$this->vueFeatureBoard, 'wpvfr_delete_feature_board']);
-        add_action('wp_ajax_wpvfr_update_feaure_board', [$this->vueFeatureBoard, 'wpvfr_update_feaure_board']);
+        add_action('wp_ajax_wpvfr_feature_board_doing',[$this->vueFeatureBoard,'handle_endpoints']);
     }
 }

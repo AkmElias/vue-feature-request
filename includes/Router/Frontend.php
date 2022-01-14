@@ -24,8 +24,7 @@ class Frontend
 
     public function wpvfr_routes(){
         add_action('wp_ajax_nopriv_wpvfr_user_register', [$this->user, 'wpvfr_user_register']);
-        add_action('wp_ajax_nopriv_wpvfr_update_board_sort_by', [$this->feature_board, 'wpvfr_update_board_sort_by']);
-        add_action('wp_ajax_wpvfr_update_board_sort_by', [$this->feature_board, 'wpvfr_update_board_sort_by']);
+        add_action('wp_ajax_nopriv_wpvfr_faeture_board_doing', [$this->feature_board, 'handle_endpoints']);
         add_action('wp_ajax_wpvfr_req_vote_handle', [$this->votes_controller, 'wpvfr_req_vote_handle']);
         add_action('wp_ajax_nopriv_wpvfr_user_login', [$this->user, 'wpvfr_user_login']);
         add_action('wp_ajax_wpvfr_add_vue_feature_req', [$this->feature_list, 'wpvfr_add_vue_feature_req']);
